@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website PLN</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #f5f5f5;
+    }
+    header {
+      background: #0099ff;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: white;
+    }
+    header img {
+      position: absolute;
+      left: 15px;
+      height: 50px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+    .slideshow-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+    .slide {
+      display: none;
+      padding: 20px;
+      text-align: center;
+      background: #1c1c1c;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0099ff;
+    }
+    .active { display: block; }
+    .slide h2 { color: #00ffcc; }
+    .contact {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #1c1c1c;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0099ff;
+    }
+    .contact h2 {
+      text-align: center;
+      color: #00ffcc;
+    }
+    .contact input, .contact textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+    }
+    .contact button {
+      width: 100%;
+      padding: 12px;
+      background: #0099ff;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .contact button:hover { background: #0077cc; }
+    .nav-dots {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .dot {
+      height: 15px;
+      width: 15px;
+      margin: 0 5px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .dot.active { background-color: #0099ff; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Logo_PLN.svg/120px-Logo_PLN.svg.png" alt="Logo PLN">
+    <h1>⚡ Website Resmi PLN ⚡</h1>
+  </header>
+
+  <!-- Slide Section -->
+  <div class="slideshow-container">
+    <div class="slide active">
+      <h2>Tentang PLN</h2>
+      <p>PLN adalah perusahaan penyedia listrik negara yang bertugas menyediakan energi listrik untuk seluruh rakyat Indonesia.</p>
+    </div>
+    <div class="slide">
+      <h2>PLN Mobile</h2>
+      <p>PLN Mobile adalah aplikasi resmi untuk memudahkan pelanggan mengecek tagihan, membeli token listrik, hingga mengajukan permohonan layanan.</p>
+    </div>
+    <div class="slide">
+      <h2>K2K3 PLN</h2>
+      <p>K2K3 adalah program Keselamatan dan Kesehatan Kerja di PLN yang meliputi: 
+      <br>🔹 Pencegahan kecelakaan kerja
+      <br>🔹 Perlindungan pekerja
+      <br>🔹 Pengelolaan risiko ketenagalistrikan</p>
+    </div>
+    <div class="slide">
+      <h2>Tarif Listrik Resmi</h2>
+      <p>⚡ R-1/TR (450 VA): Rp 415 / kWh<br>
+         ⚡ R-1/TR (900 VA-RTM): Rp 1.352 / kWh<br>
+         ⚡ R-1/TR (1300 VA ke atas): Rp 1.444,70 / kWh</p>
+    </div>
+  </div>
+
+  <!-- Navigation Dots -->
+  <div class="nav-dots">
+    <span class="dot active" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+  </div>
+
+  <!-- Contact Section -->
+  <section class="contact" id="kontak">
+    <h2>Kontak Cepat PLN</h2>
+    <form id="contactForm">
+      <input type="text" id="nama" placeholder="Nama Lengkap" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="text" id="asal" placeholder="Asal Daerah" required>
+      <textarea id="pesan" placeholder="Tulis pesan Anda..." required></textarea>
+      <button type="submit">Kirim Pesan</button>
+    </form>
+  </section>
+
+  <!-- Slideshow Script -->
+  <script>
+    let slideIndex = 1;
+    showSlide(slideIndex);
+
+    function currentSlide(n) {
+      showSlide(slideIndex = n);
+    }
+
+    function showSlide(n) {
+      let slides = document.getElementsByClassName("slide");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+    }
+  </script>
+
+  <!-- EmailJS Script -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("bPQ3Lm1MzvfFI4DxK"); // Public Key
+    })();
+
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.send("service_f2mq9t4","template_6uupvhp",{
+        nama: document.getElementById("nama").value,
+        email: document.getElementById("email").value,
+        asal: document.getElementById("asal").value,
+        pesan: document.getElementById("pesan").value
+      }).then(function(response) {
+        alert("✅ Pesan berhasil dikirim! Terima kasih telah menghubungi PLN.");
+      }, function(error) {
+        alert("❌ Gagal mengirim pesan, coba lagi nanti.");
+        console.error("EmailJS error:", error);
+      });
+
+      this.reset();
+    });
+  </script>
+</body>
+</html>
